@@ -35,7 +35,7 @@ public class PessoaService : IPessoaService
         var commit = await _unitOfWork.Pessoa.AdicionarPessoaAsync(pessoa);
 
         if (commit)
-            SendNotificationProducer(pessoa.Nome, pessoa.Email, Guid.NewGuid());
+            await SendNotificationProducer(pessoa.Nome, pessoa.Email, Guid.NewGuid());
         
         return commit ? pessoa.Id : Guid.Empty;
     }
@@ -51,10 +51,10 @@ public class PessoaService : IPessoaService
             return false;
         }
         
-        var commit = await _unitOfWork.Pessoa.AtualizarPessoa(pessoa);
+        var commit = await _unitOfWork.Pessoa.AtualizarPessoaAsync(pessoa);
 
         if (commit)
-            SendNotificationProducer(pessoa.Nome, pessoa.Email, Guid.NewGuid());
+            await SendNotificationProducer(pessoa.Nome, pessoa.Email, Guid.NewGuid());
         
         return commit;
     }
@@ -69,10 +69,10 @@ public class PessoaService : IPessoaService
         }
         
         pessoa.AlterarStatus(false);
-        var commit = await _unitOfWork.Pessoa.AtualizarPessoa(pessoa);
+        var commit = await _unitOfWork.Pessoa.AtualizarPessoaAsync(pessoa);
         
         if (commit)
-            SendNotificationProducer(pessoa.Nome, pessoa.Email, Guid.NewGuid());
+            await SendNotificationProducer(pessoa.Nome, pessoa.Email, Guid.NewGuid());
 
         return commit;
     }

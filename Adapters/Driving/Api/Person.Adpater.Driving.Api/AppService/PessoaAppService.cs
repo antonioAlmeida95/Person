@@ -31,7 +31,7 @@ public class PessoaAppService : IPessoaAppService
     public async Task<PessoaViewModel?> ObterPessoaPorId(Guid pessoaId)
     {
         var pessoa = await _pessoaService.ObterPessoaPorId(pessoaId);
-        return _mapper.Map<PessoaViewModel>(pessoa);
+        return pessoa is not null ? _mapper.Map<PessoaViewModel>(pessoa) : null;
     }
 
     public async Task<bool> AtualizarPessoa(PessoaViewModel pessoaViewModel)

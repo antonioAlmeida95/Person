@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Person.Core.Domain.Entities;
 
 namespace Person.Adapter.Driven.Database.Mappings;
 
+[ExcludeFromCodeCoverage]
 public class PessoaMapping : IEntityTypeConfiguration<Pessoa>
 {
     public void Configure(EntityTypeBuilder<Pessoa> builder)

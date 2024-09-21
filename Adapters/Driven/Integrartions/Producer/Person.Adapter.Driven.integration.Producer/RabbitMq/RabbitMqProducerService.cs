@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -7,6 +8,7 @@ using Person.Core.Domain.Adapters.Integrations.Producer.Model;
 
 namespace Person.Adapter.Driven.integration.Producer.RabbitMq;
 
+[ExcludeFromCodeCoverage]
 public class RabbitMqProducerService : IProducerService
 {
 

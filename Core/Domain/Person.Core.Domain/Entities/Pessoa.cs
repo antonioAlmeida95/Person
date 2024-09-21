@@ -1,28 +1,24 @@
-using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
 using Person.Core.Domain.Entities.Enums;
 
 namespace Person.Core.Domain.Entities;
 
+[ExcludeFromCodeCoverage]
 public class Pessoa : EntidadeBase<Pessoa>
 {
-    [MaxLength(100)]
     public string Nome { get; }
-    
-    [MaxLength(100)]
     public string Email { get; }
     public TipoPessoa Tipo { get; }
-    
-    [MaxLength(15)]
     public string Documento { get; }
     public bool Status { get; private set; }
     
     public void AlterarStatus(bool status) => Status = status;
-
+    public Pessoa(){ }
+    
     public Pessoa(string nome, string email, TipoPessoa tipo, string documento)
         : this(nome, email, tipo, documento, null) { }
     public Pessoa(string nome, string email, TipoPessoa tipo, string documento, Guid? id = null) 
-        
     {
         Id = id ?? Guid.NewGuid();
         Nome = nome;
@@ -31,8 +27,6 @@ public class Pessoa : EntidadeBase<Pessoa>
         Documento = documento;
     }
     
-    public Pessoa(){ }
-
     public override bool ValidarEntidade()
     {
         RuleFor(x => x.Nome)

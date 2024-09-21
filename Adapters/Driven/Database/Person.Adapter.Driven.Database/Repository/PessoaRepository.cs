@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
@@ -7,6 +8,7 @@ using Person.Core.Domain.Entities;
 
 namespace Person.Adapter.Driven.Database.Repository;
 
+[ExcludeFromCodeCoverage]
 public class PessoaRepository(PessoaContext context) : IDisposable, IPessoaRepository,
     IAsyncDisposable
 {
@@ -16,7 +18,7 @@ public class PessoaRepository(PessoaContext context) : IDisposable, IPessoaRepos
         return await Commit();
     }
 
-    public async Task<bool> AtualizarPessoa(Pessoa pessoa)
+    public async Task<bool> AtualizarPessoaAsync(Pessoa pessoa)
     {
         context.Update(pessoa);
         return await Commit();
