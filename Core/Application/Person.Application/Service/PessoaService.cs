@@ -1,5 +1,6 @@
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
+using Notification.Core.Domain.Constantes;
 using Person.Core.Domain.Adapters.Database.UnitOfWork;
 using Person.Core.Domain.Adapters.Integrations.Producer.Interface;
 using Person.Core.Domain.Adapters.Integrations.Producer.Model;
@@ -35,7 +36,8 @@ public class PessoaService : IPessoaService
         var commit = await _unitOfWork.Pessoa.AdicionarPessoaAsync(pessoa);
 
         if (commit)
-            await SendNotificationProducer(pessoa.Nome, pessoa.Email, Guid.NewGuid());
+            await SendNotificationProducer(pessoa.Nome, pessoa.Email, 
+                NotificationIdentify.NOTIFICACAO_NOVO_USUARIO());
         
         return commit ? pessoa.Id : Guid.Empty;
     }
@@ -54,7 +56,8 @@ public class PessoaService : IPessoaService
         var commit = await _unitOfWork.Pessoa.AtualizarPessoaAsync(pessoa);
 
         if (commit)
-            await SendNotificationProducer(pessoa.Nome, pessoa.Email, Guid.NewGuid());
+            await SendNotificationProducer(pessoa.Nome, pessoa.Email, 
+                NotificationIdentify.NOTIFICACAO_USUARIO_ATUALIZADO());
         
         return commit;
     }
@@ -72,7 +75,8 @@ public class PessoaService : IPessoaService
         var commit = await _unitOfWork.Pessoa.AtualizarPessoaAsync(pessoa);
         
         if (commit)
-            await SendNotificationProducer(pessoa.Nome, pessoa.Email, Guid.NewGuid());
+            await SendNotificationProducer(pessoa.Nome, pessoa.Email, 
+                NotificationIdentify.NOTIFICACAO_USUARIO_REMOVIDO());
 
         return commit;
     }

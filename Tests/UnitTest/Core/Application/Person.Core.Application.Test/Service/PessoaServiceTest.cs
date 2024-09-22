@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Moq;
+using Notification.Core.Domain.Constantes;
 using Person.Application.Service;
 using Person.Core.Domain.Adapters.Database.UnitOfWork;
 using Person.Core.Domain.Adapters.Integrations.Producer.Interface;
@@ -45,7 +46,9 @@ public class PessoaServiceTest
                 Times.Once);
         
         _fixture.Mocker.GetMock<IProducerService>()
-            .Verify(s => s.ProduceMessage(It.Is<Message>(m => m.Nome == pessoa.Nome)),
+            .Verify(s => s.ProduceMessage(It.Is<Message>(m =>
+                    m.Nome == pessoa.Nome &&
+                    m.NotificationId == NotificationIdentify.NOTIFICACAO_NOVO_USUARIO())),
                 Times.Once);
     }
 
@@ -120,7 +123,9 @@ public class PessoaServiceTest
                 Times.Once);
         
         _fixture.Mocker.GetMock<IProducerService>()
-            .Verify(s => s.ProduceMessage(It.Is<Message>(m => m.Nome == pessoa.Nome)),
+            .Verify(s => s.ProduceMessage(It.Is<Message>(
+                    m => m.Nome == pessoa.Nome &&
+                         m.NotificationId == NotificationIdentify.NOTIFICACAO_USUARIO_ATUALIZADO())),
                 Times.Once);
     }
 
@@ -180,7 +185,9 @@ public class PessoaServiceTest
                 Times.Once);
         
         _fixture.Mocker.GetMock<IProducerService>()
-            .Verify(s => s.ProduceMessage(It.Is<Message>(m => m.Nome == pessoa.Nome)),
+            .Verify(s => s.ProduceMessage(It.Is<Message>(
+                    m => m.Nome == pessoa.Nome &&
+                         m.NotificationId == NotificationIdentify.NOTIFICACAO_USUARIO_REMOVIDO())),
                 Times.Once);
     }
 
