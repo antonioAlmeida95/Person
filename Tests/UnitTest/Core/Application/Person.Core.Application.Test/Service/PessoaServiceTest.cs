@@ -108,12 +108,18 @@ public class PessoaServiceTest
         
         //Setup
         _fixture.SetupAtualizarPessoaAsync();
+        _fixture.SetupObterPessoaPorId(pessoa);
         
         //Act
         var sucesso = await _pessoaService.AtualizarPessoa(pessoa);
         
         //Assert
         Assert.True(sucesso);
+        
+        _fixture.Mocker.GetMock<IUnitOfWork>()
+            .Verify(s => s.Pessoa.ObterPessoaPorFiltro(It.IsAny<Expression<Func<Pessoa, bool>>>(),
+                    It.Is<bool>(t => !t)),
+                Times.Once);
         
         _fixture.Mocker.GetMock<IUnitOfWork>()
             .Verify(s => s.Pessoa.AtualizarPessoaAsync(It.Is<Pessoa>(p => p.Id == pessoa.Id

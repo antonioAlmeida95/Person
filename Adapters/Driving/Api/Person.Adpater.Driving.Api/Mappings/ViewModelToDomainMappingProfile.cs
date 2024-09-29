@@ -9,6 +9,10 @@ public class ViewModelToDomainMappingProfile : Profile
     public ViewModelToDomainMappingProfile()
     {
         CreateMap<PessoaViewModel, Pessoa>()
-            .ForMember(s => s.Id, opt => opt.MapFrom(src => src.PessoaId));
+            .ForMember(s => s.Id, opt => opt.MapFrom(src => src.PessoaId))
+            .AfterMap((src, des) =>
+            {
+                des.Id = src.PessoaId;
+            });
     }
 }

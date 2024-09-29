@@ -7,13 +7,18 @@ namespace Person.Core.Domain.Entities;
 [ExcludeFromCodeCoverage]
 public class Pessoa : EntidadeBase<Pessoa>
 {
-    public string Nome { get; }
-    public string Email { get; }
-    public TipoPessoa Tipo { get; }
-    public string Documento { get; }
+    public string Nome { get; private set; }
+    public string Email { get; private set; }
+    public TipoPessoa Tipo { get; private set; }
+    public string Documento { get; private set; }
     public bool Status { get; private set; }
     
     public void AlterarStatus(bool status) => Status = status;
+    public void AlterarNome(string nome) => Nome = nome;
+    public void AlterarEmail(string email) => Email = email;
+    public void AlterarDocumeto(string documento) => Documento = documento;
+    public void AlterarTipo(TipoPessoa tipo) => Tipo = tipo;
+    
     public Pessoa(){ }
     
     public Pessoa(string nome, string email, TipoPessoa tipo, string documento)

@@ -52,6 +52,14 @@ public class PessoaService : IPessoaService
             LogErrosEntidade(pessoa);
             return false;
         }
+
+        var pessoaEntidade = await _unitOfWork.Pessoa.ObterPessoaPorFiltro(p => p.Id == pessoa.Id);
+        
+        if (pessoaEntidade is null)
+        {
+            _logger.LogError("Pessoa não encontrada.");
+            return false;
+        }
         
         var commit = await _unitOfWork.Pessoa.AtualizarPessoaAsync(pessoa);
 
@@ -60,6 +68,14 @@ public class PessoaService : IPessoaService
                 NotificationIdentify.NOTIFICACAO_USUARIO_ATUALIZADO());
         
         return commit;
+    }
+
+    private static void AtualizarCampos(Pessoa pessoa, Pessoa pessoaAtualizada)
+    {
+        pessoa.AlterarStatus(pessoaAtualizada.Status);
+        pessoa.AlterarNome(pessoaAtualizada.Nome);
+        pessoa.AlterarDocumeto(pessoaAtualizada.Documento);
+        pessoa.AlterarEmail(pessoaAtualizada.Email);
     }
 
     public async Task<bool> RemoverPessoa(Guid pessoaId)
